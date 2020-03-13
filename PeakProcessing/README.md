@@ -6,8 +6,8 @@
 * MALDIquant::detectPeaks
 
 ### Parameters
-*SNR: 10
-*methdo: MAD
-*halfWindowSize: 10
+* SNR: 10
+* methdo: MAD
+* halfWindowSize: 10
 
 [[1]] spectrum extracted
