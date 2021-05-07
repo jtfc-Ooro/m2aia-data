@@ -1,0 +1,91 @@
+// Example parameter file for affine registration
+// C-style comments: //
+
+(FixedInternalImagePixelType "float")
+(MovingInternalImagePixelType "float")
+
+(FixedImageDimension 2)
+(MovingImageDimension 2)
+
+(UseDirectionCosines "true")
+
+// **************** Main Components **************************
+
+// The following components should usually be left as they are:
+(Registration "MultiResolutionRegistration")
+(Interpolator "LinearInterpolator")
+(ResampleInterpolator "FinalLinearInterpolator")
+(Resampler "DefaultResampler")
+
+
+(FixedImagePyramid "FixedRecursiveImagePyramid")
+(MovingImagePyramid "MovingRecursiveImagePyramid")
+
+
+(Optimizer "AdaptiveStochasticGradientDescent")
+(Metric "AdvancedMattesMutualInformation")
+(Transform "EulerTransform")
+
+// ***************** Transformation **************************
+
+(AutomaticScalesEstimation "true")
+
+(AutomaticTransformInitialization "true")
+(AutomaticTransformInitializationMethod "GeometricalCenter")
+
+(HowToCombineTransforms "Compose")
+
+// ******************* Similarity measure *********************
+
+(NumberOfHistogramBins 32)
+
+// If you use a mask, this option is important.
+// If the mask serves as region of interest, set it to false.
+// If the mask indicates which pixels are valid, then set it to true.
+// If you do not use a mask, the option doesn't matter.
+(ErodeMask "true")
+
+// ******************** Multiresolution **********************
+
+(NumberOfResolutions 3)
+
+
+// ******************* Optimizer ****************************
+
+(MaximumNumberOfIterations 250)
+
+// The step size of the optimizer, in mm. By default the voxel size is used.
+// which usually works well. In case of unusual high-resolution images
+// (eg histology) it is necessary to increase this value a bit, to the size
+// of the "smallest visible structure" in the image:
+//(MaximumStepLength 100.0 100.0 50.0 30.0 15.0 15.0 10.0 10.0 1.0 1.0)
+
+// **************** Image sampling **********************
+
+(NumberOfSpatialSamples 15000)
+
+(NewSamplesEveryIteration "true")
+(ImageSampler "Random")
+
+// ************* Interpolation and Resampling ****************
+
+
+(BSplineInterpolationOrder 3)
+
+// Order of B-Spline interpolation used for applying the final
+// deformation.
+// 3 gives good accuracy; recommended in most cases.
+// 1 gives worse accuracy (linear interpolation)
+// 0 gives worst accuracy, but is appropriate for binary images
+// (masks, segmentations); equivalent to nearest neighbor interpolation.
+(FinalBSplineInterpolationOrder 3)
+
+//Default pixel value for pixels that come from outside the picture:
+(DefaultPixelValue 0)
+
+(WriteTransformParametersEachResolution "false")
+(WriteResultImage "true")
+
+// The pixel type and format of the resulting deformed moving image
+(ResultImagePixelType "float")
+(ResultImageFormat "nrrd")
